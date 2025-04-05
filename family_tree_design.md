@@ -1,113 +1,130 @@
-# 家谱关系可视化设计方案
+# Family Tree Visualization Design Document
 
-## 1. 核心可视化设计
+## 1. Core Visualization Design
 
-### 1.1 家族树图
-- **布局方式**：采用力导向图布局，便于展示复杂关系
-- **节点设计**：
-  - 圆形节点代表个人
-  - 颜色编码：
-    - 蓝色：男性
-    - 粉色：女性
-    - 灰色：已故
-  - 节点大小：根据代数调整（长辈节点稍大）
-- **连线设计**：
-  - 实线：亲子关系
-  - 虚线：配偶关系
-  - 线宽：根据关系亲密度调整
+### 1.1 Family Tree Graph
+- **Layout**: Horizontal tree layout using D3.js
+- **Node Design**:
+  - Circular nodes represent individuals
+  - Color coding:
+    - Blue: Male
+    - Pink: Female
+    - Gray: Deceased
+    - Light Green: Unborn
+  - Node size: Consistent size with visual emphasis through highlighting
+- **Link Design**:
+  - Horizontal links showing parent-child relationships
+  - Link distance optimized for readability
 
-### 1.2 时间轴
-- 位置：位于视图底部
-- 设计：
-  - 水平时间轴
-  - 可拖动的时间选择器
-  - 重要时间点标记（如战争时期）
-- 功能：
-  - 动态更新节点状态（存活/已故）
-  - 显示特定时期家族成员
+### 1.2 Timeline
+- Position: Bottom of the view
+- Design:
+  - Horizontal slider
+  - Current year display
+  - Interactive year selection
+- Functionality:
+  - Dynamic update of node status (living/deceased/unborn)
+  - Temporal filtering of family members
 
-### 1.3 地区筛选器
-- 位置：视图右上角
-- 设计：
-  - 下拉菜单形式
-  - 多选功能
-- 功能：
-  - 高亮显示特定地区成员
-  - 支持多地区组合筛选
+### 1.3 Location Filter
+- Position: Top of the view
+- Design:
+  - Multi-select dropdown menu
+  - "All locations" option available
+- Functionality:
+  - Highlight members from selected regions
+  - Support for multiple location selection
+  - Opacity-based filtering
 
-## 2. 交互设计
+## 2. Interaction Design
 
-### 2.1 节点交互
-- 悬停：显示详细信息（姓名、生卒年月、居住地）
-- 点击：
-  - 展开/收起分支
-  - 高亮相关亲属
-  - 显示关系路径
+### 2.1 Node Interaction
+- Hover: Display detailed tooltip with:
+  - Name
+  - Gender
+  - Birth year
+  - Death year (if applicable)
+  - Location
+  - Current status
+- Click:
+  - Highlight relatives
+  - Show direct relationships
+  - Identify cousins
 
-### 2.2 查询功能
-- 快速查找：
-  - 姓名搜索
-  - 关系查询（如"显示所有表亲"）
-- 高级筛选：
-  - 时间+地区组合筛选
-  - 关系类型筛选
+### 2.2 Search and Filter Features
+- Name search:
+  - Real-time filtering
+  - Case-insensitive matching
+- Combined filtering:
+  - Time-based filtering via timeline
+  - Location-based filtering
+  - Search-based highlighting
 
-## 3. 数据模型
+### 2.3 Zoom Controls
+- Zoom in/out buttons
+- Reset zoom option
+- Pan functionality
+- Scale limits for optimal viewing
 
-### 3.1 成员数据结构
+## 3. Data Model
+
+### 3.1 Member Data Structure
 ```json
 {
   "id": "unique_id",
-  "name": "姓名",
-  "gender": "性别",
-  "birthDate": "出生日期",
-  "deathDate": "死亡日期",
-  "location": "居住地",
-  "parents": ["parent_id1", "parent_id2"],
-  "spouse": "spouse_id",
+  "name": "Full Name",
+  "gender": "male/female",
+  "birthYear": "birth_year",
+  "deathYear": "death_year",
+  "location": "place_name",
   "children": ["child_id1", "child_id2"]
 }
 ```
 
-### 3.2 关系类型
-- 直系亲属：父母、子女
-- 旁系亲属：兄弟姐妹、表亲
-- 姻亲：配偶
+### 3.2 Relationship Types
+- Direct relationships:
+  - Parent-child connections
+  - Sibling relationships
+- Extended relationships:
+  - Cousin identification
+  - Ancestor-descendant paths
 
-## 4. 使用场景示例
+## 4. Implementation Features
 
-### 4.1 查找表亲
-1. 点击目标人物节点
-2. 系统自动展开并高亮显示所有表亲
-3. 显示关系路径
+### 4.1 Visualization Components
+- D3.js tree layout
+- SVG-based rendering
+- Dynamic data binding
+- Smooth transitions
 
-### 4.2 时间筛选
-1. 拖动时间轴到1914年
-2. 系统自动：
-   - 灰显已故成员
-   - 高亮存活成员
-   - 显示该时期家族结构
+### 4.2 Interactive Features
+- Real-time updates
+- Smooth animations
+- Responsive design
+- Cross-browser compatibility
 
-### 4.3 地区筛选
-1. 选择"Taranaki"地区
-2. 系统：
-   - 高亮显示该地区成员
-   - 淡化其他地区成员
-   - 保持关系线可见
+### 4.3 Performance Optimization
+- Efficient data structure
+- Optimized rendering
+- Smooth zooming and panning
+- Responsive interaction handling
 
-## 5. 设计优势
+## 5. Design Advantages
 
-1. **直观性**：
-   - 清晰的视觉层次
-   - 直观的关系表示
-   - 易于理解的交互方式
+1. **Usability**:
+   - Intuitive navigation
+   - Clear visual hierarchy
+   - Responsive interactions
+   - User-friendly controls
 
-2. **灵活性**：
-   - 支持多种查询方式
-   - 可组合的筛选条件
-   - 动态的数据展示
+2. **Flexibility**:
+   - Multiple filter options
+   - Combined search capabilities
+   - Adaptable view settings
+   - Dynamic updates
 
-3. **可扩展性**：
-   - 支持添加新成员
-   - 可扩展的筛选条件
-   - 可自定义的显示选项 
+3. **Functionality**:
+   - Comprehensive relationship display
+   - Temporal analysis support
+   - Geographic filtering
+   - Interactive exploration tools 
