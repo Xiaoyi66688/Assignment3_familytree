@@ -3,68 +3,70 @@
 ## 1. Core Visualization Design
 
 ### 1.1 Family Tree Graph
-- **Layout**: Horizontal tree layout using D3.js
+- **Layout**: Tree layout with horizontal orientation
 - **Node Design**:
   - Circular nodes represent individuals
-  - Color coding:
+  - Color Coding:
     - Blue: Male
     - Pink: Female
     - Gray: Deceased
     - Light Green: Unborn
-  - Node size: Consistent size with visual emphasis through highlighting
+  - Node size: 10px radius with 2px white stroke
 - **Link Design**:
-  - Horizontal links showing parent-child relationships
-  - Link distance optimized for readability
+  - Solid lines for parent-child relationships
+  - Gray color (#999) with 1.5px width
 
 ### 1.2 Timeline
-- Position: Bottom of the view
+- Position: Top of control panel
 - Design:
   - Horizontal slider
   - Current year display
-  - Interactive year selection
-- Functionality:
-  - Dynamic update of node status (living/deceased/unborn)
-  - Temporal filtering of family members
+  - Range from 1850 to 2024
+- Features:
+  - Dynamic update of node status (living/deceased)
+  - Visualization of family structure at specific times
 
 ### 1.3 Location Filter
-- Position: Top of the view
+- Position: Control panel
 - Design:
-  - Multi-select dropdown menu
-  - "All locations" option available
-- Functionality:
+  - Multiple select dropdown
+  - Options: all, taranaki, australia, uk
+- Features:
   - Highlight members from selected regions
-  - Support for multiple location selection
-  - Opacity-based filtering
+  - Support multi-region filtering
+  - Opacity adjustment for non-selected regions
 
 ## 2. Interaction Design
 
-### 2.1 Node Interaction
-- Hover: Display detailed tooltip with:
+### 2.1 Node Interactions
+- Hover: Display tooltip with detailed information
   - Name
   - Gender
-  - Birth year
-  - Death year (if applicable)
+  - Birth Year
+  - Death Year
   - Location
-  - Current status
+  - Status
 - Click:
-  - Highlight relatives
-  - Show direct relationships
-  - Identify cousins
+  - Highlight direct relatives
+  - Highlight cousins
+  - Visual feedback with different border colors
 
-### 2.2 Search and Filter Features
-- Name search:
+### 2.2 Search and Filter Functions
+- Name Search:
   - Real-time filtering
-  - Case-insensitive matching
-- Combined filtering:
+  - Highlight matching nodes
+- Advanced Filtering:
   - Time-based filtering via timeline
   - Location-based filtering
-  - Search-based highlighting
+  - Combined filtering support
 
 ### 2.3 Zoom Controls
-- Zoom in/out buttons
-- Reset zoom option
-- Pan functionality
-- Scale limits for optimal viewing
+- Features:
+  - Zoom in (+)
+  - Zoom out (-)
+  - Reset view
+- Scale limits: 0.1x to 3x
+- Initial zoom: 0.8x
 
 ## 3. Data Model
 
@@ -74,57 +76,56 @@
   "id": "unique_id",
   "name": "Full Name",
   "gender": "male/female",
-  "birthYear": "birth_year",
-  "deathYear": "death_year",
+  "birthYear": "YYYY",
+  "deathYear": "YYYY",
   "location": "place_name",
   "children": ["child_id1", "child_id2"]
 }
 ```
 
 ### 3.2 Relationship Types
-- Direct relationships:
-  - Parent-child connections
-  - Sibling relationships
-- Extended relationships:
-  - Cousin identification
-  - Ancestor-descendant paths
+- Direct relatives (parents, children)
+- Cousins
+- Current selection
 
-## 4. Implementation Features
+## 4. Visual Styling
 
-### 4.1 Visualization Components
-- D3.js tree layout
+### 4.1 Color Scheme
+- Nodes:
+  - Male: #4a90e2 (blue)
+  - Female: #e2a4a4 (pink)
+  - Deceased: #cccccc (gray)
+  - Unborn: #90EE90 (light green)
+- Highlights:
+  - Direct relatives: Gold (#ffd700)
+  - Cousins: Pink (#ff4081)
+  - Selected person: Green (#00ff00)
+
+### 4.2 Layout
+- Tree orientation: Horizontal
+- Node spacing: 1.2x for different parents
+- Text labels: 12px Arial font
+- Responsive design support
+
+## 5. Implementation Features
+
+### 5.1 Core Features
+- Interactive family tree visualization
+- Dynamic timeline filtering
+- Location-based filtering
+- Name search functionality
+- Relative highlighting
+- Zoom and pan controls
+
+### 5.2 Technical Details
+- Built with D3.js
 - SVG-based rendering
-- Dynamic data binding
-- Smooth transitions
-
-### 4.2 Interactive Features
-- Real-time updates
-- Smooth animations
 - Responsive design
-- Cross-browser compatibility
+- Touch device support
+- Modern browser compatibility
 
-### 4.3 Performance Optimization
-- Efficient data structure
-- Optimized rendering
-- Smooth zooming and panning
-- Responsive interaction handling
-
-## 5. Design Advantages
-
-1. **Usability**:
-   - Intuitive navigation
-   - Clear visual hierarchy
-   - Responsive interactions
-   - User-friendly controls
-
-2. **Flexibility**:
-   - Multiple filter options
-   - Combined search capabilities
-   - Adaptable view settings
-   - Dynamic updates
-
-3. **Functionality**:
-   - Comprehensive relationship display
-   - Temporal analysis support
-   - Geographic filtering
-   - Interactive exploration tools 
+### 5.3 Performance Considerations
+- Efficient node rendering
+- Smooth transitions
+- Optimized event handling
+- Mobile-friendly design 
